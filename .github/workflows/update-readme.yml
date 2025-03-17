@@ -1,0 +1,35 @@
+name: Update README Directory
+
+on:
+  push:
+    branches:
+      - main  #  active only when push to main
+  schedule:
+    - cron: "0 0 * * 1"  # automatically run on Mondays
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3  # pull the code
+
+      - name: Install tree
+        run: sudo apt-get install tree  
+
+      - name: Generate Directory Structure
+        run: |
+          tree -I "node_modules|.git|.github" > structure.txt
+          sed -i '/<!-- START_DIR_STRUCTURE -->/,/<!-- END_DIR_STRUCTURE -->/c\
+          <!-- START_DIR_STRUCTURE -->\n\
+          '"$(cat structure.txt)"'\n\
+          <!-- END_DIR_STRUCTURE -->' README.md
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Auto-update directory structure in README.md" || echo "No changes to commit"
+          git push
