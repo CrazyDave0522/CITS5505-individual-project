@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -11,27 +11,27 @@
 
 <body>
     <main class="container py-5">
-        <h1 class="text-center mb-4">Web Development Best Practices</h1>
+        <h1 class="text-center mb-4 text-white">Web Development Best Practices</h1>
 
-        <!-- progress bar -->
+        <!-- 进度条 -->
         <div class="stats-section mb-4">
-            <h3 class="progress-title mb-3">Current Progress</h3>
+            <h3 class="progress-title mb-3 text-white">Current Progress</h3>
             <div class="progress-bar-container position-relative">
                 <div class="progress" style="height: 25px;">
-                    <div class="progress-bar" role="progressbar"></div>
+                    <div class="progress-bar bg-success" role="progressbar"></div>
                 </div>
-                <div class="progress-text mt-2 text-center"></div>
+                <div class="progress-text mt-2 text-center text-white"></div>
             </div>
         </div>
 
-        <!-- practice card -->
+        <!-- 卡片容器 -->
         <div class="row g-4" id="practices-container"></div>
 
-        <!-- reward display -->
+        <!-- 奖励展示 -->
         <div class="animal-reward mt-4"></div>
     </main>
 
-    <!-- modal -->
+    <!-- 弹窗 -->
     <div class="reward-modal">
         <div class="modal-mask"></div>
         <div class="modal-content bg-white rounded-3 p-4">
@@ -42,8 +42,18 @@
         </div>
     </div>
 
+    <!-- 页脚 -->
+    <footer class="site-footer mt-auto py-3">
+        <div class="container">
+            <div class="text-center text-muted">
+                <span>Created by Zixiao Ma(24116864)</span>
+                <span class="mx-2">•</span>
+                <span>&copy; 2025 All rights reserved</span>
+            </div>
+        </div>
+    </footer>
+
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="./js/best-practices.js"></script>
 </body>
-
 </html>

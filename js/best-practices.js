@@ -4,7 +4,7 @@ const CONFIG = {
   FALLBACK_IMAGE: "./images/fallback.png",
   STORAGE_KEY: "practiceSelections",
   SUCCESS_THRESHOLD: 12,
-  CATEGORIES: ["HTML", "CSS", "JavaScript"],
+  CATEGORIES: ["HTML", "CSS", "JS"],
 };
 
 class BestPracticeApp {
@@ -67,22 +67,28 @@ class BestPracticeApp {
     this.updateProgress();
   }
 
-  generateCards() {
-    return CONFIG.CATEGORIES.map(
-      (category) => `
-          <div class="col-lg-4 mb-4">
-              <div class="card h-100">
-                  <div class="card-header bg-primary text-white">
-                      <h3 class="mb-0">${category}</h3>
-                  </div>
-                  <div class="card-body">
-                      ${this.generateItems(category)}
-                  </div>
-              </div>
+
+// 修改 generateCards() 方法
+generateCards() {
+  return CONFIG.CATEGORIES.map(category => {
+    // 将 JavaScript 转换为 JS
+    const formattedCategory = category === 'JavaScript' ? 'JS' : category;
+    const headerClass = `${formattedCategory.toLowerCase()}-header`;
+    
+    return `
+      <div class="col-lg-4 mb-4">
+        <div class="card h-100">
+          <div class="card-header ${headerClass}">
+            <h3 class="mb-0">${category}</h3>
           </div>
-      `
-    ).join("");
-  }
+          <div class="card-body">
+            ${this.generateItems(category)}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
 
   generateItems(category) {
     return this.practices
@@ -98,7 +104,7 @@ class BestPracticeApp {
           this.selections.has(p.id) ? "checked" : ""
         }>
                       <label class="form-check-label" for="${p.id}">
-                          Completed
+                         Implemented
                       </label>
                   </div>
               </div>

@@ -1,16 +1,45 @@
-/* 基础样式 */
+/* best-practices.css */
 body {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(135deg,rgb(32, 50, 67) 0%, rgb(83, 105, 128) 100%);
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* 进度条容器 */
 .progress-bar-container {
   max-width: 800px;
   margin: 0 auto;
 }
+.progress-title {
+  text-align: center !important;
+  display: block;
+  width: 100%;
+}
+/* 修改卡片头部颜色 */
+.category-card .card-header {
+  background-color: #2c3e50; /* 默认颜色 */
+  color: white;
+}
 
-/* 礼物图标 */
+/* HTML 卡片标题 */
+.html-header {
+  background: linear-gradient(45deg, #e44d26, #f16529) !important;
+  color: white !important; /* 强制白色文字 */
+}
+
+/* CSS 卡片标题 */
+.css-header {
+  background: linear-gradient(45deg, #264de4, #2965f1) !important;
+  color: white !important; /* 强制白色文字 */
+}
+
+/* JavaScript 卡片标题 */
+.js-header {
+  background: linear-gradient(45deg, #f0db4f, #f7df1e) !important;
+  color: #2c3e50 !important; /* 深灰色文字 */
+  font-weight: 600 !important; /* 加粗提升可读性 */
+}
+
 .gift-indicator {
   position: absolute;
   right: -45px;
@@ -33,7 +62,6 @@ body {
   }
 }
 
-/* 卡片样式 */
 .category-card .card {
   border: none;
   border-radius: 12px;
@@ -46,7 +74,6 @@ body {
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
 }
 
-/* 弹窗样式 */
 .reward-modal {
   display: none;
   position: fixed;
@@ -77,6 +104,13 @@ body {
   padding: 2rem;
 }
 
+.site-footer {
+  margin-top: 4rem;
+  border-top: 1px solid #dee2e6;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.9); /* 半透明白色背景 */
+}
+
 /* 移动端适配 */
 @media (max-width: 768px) {
   .gift-indicator {
@@ -91,5 +125,19 @@ body {
   .modal-content {
     width: 95%;
     padding: 1.5rem;
+  }
+
+  .site-footer {
+    padding: 1rem 0;
+    font-size: 0.8rem;
+  }
+
+  .site-footer span {
+    display: block;
+    margin: 0.3rem 0;
+  }
+
+  .site-footer .mx-2 {
+    display: none;
   }
 }

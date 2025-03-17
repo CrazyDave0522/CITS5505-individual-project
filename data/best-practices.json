@@ -63,30 +63,30 @@
         "id": "strict-mode",
         "title": "Use Strict Mode",
         "description": "Enable 'use strict' to catch common coding errors.",
-        "category": "JavaScript"
+        "category": "JS"
     },
     {
         "id": "avoid-globals",
         "title": "Avoid Global Variables",
         "description": "Use module patterns or IIFEs to prevent namespace pollution.",
-        "category": "JavaScript"
+        "category": "JS"
     },
     {
         "id": "event-cleanup",
         "title": "Clean Up Event Listeners",
         "description": "Remove event listeners when elements are destroyed.",
-        "category": "JavaScript"
+        "category": "JS"
     },
     {
         "id": "error-handling",
         "title": "Implement Error Handling",
         "description": "Use try/catch blocks for critical operations with proper fallbacks.",
-        "category": "JavaScript"
+        "category": "JS"
     },
     {
         "id": "dependency-management",
         "title": "Manage Dependencies",
         "description": "Use modern module systems (ES modules) for code organization.",
-        "category": "JavaScript"
+        "category": "JS"
     }
 ]
