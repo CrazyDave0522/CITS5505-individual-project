@@ -1,0 +1,92 @@
+[
+    {
+        "id": "semantic-html",
+        "title": "Use Semantic HTML Elements",
+        "description": "Proper use of &lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, and &lt;article&gt; improves accessibility and SEO.",
+        "category": "HTML"
+    },
+    {
+        "id": "alt-text",
+        "title": "Provide Alt Text for Images",
+        "description": "All <img> elements should have meaningful alt attributes for accessibility.",
+        "category": "HTML"
+    },
+    {
+        "id": "form-labels",
+        "title": "Label Form Elements",
+        "description": "Use <label> tags or aria-label attributes for all form inputs.",
+        "category": "HTML"
+    },
+    {
+        "id": "valid-doctype",
+        "title": "Use HTML5 Doctype",
+        "description": "Always declare <!DOCTYPE html> at document start for standards mode.",
+        "category": "HTML"
+    },
+    {
+        "id": "viewport-meta",
+        "title": "Include Viewport Meta Tag",
+        "description": "Use <meta name='viewport'> to ensure proper mobile rendering.",
+        "category": "HTML"
+    },
+    {
+        "id": "responsive-design",
+        "title": "Implement Responsive Design",
+        "description": "Use media queries and relative units (em/rem/%) for cross-device compatibility.",
+        "category": "CSS"
+    },
+    {
+        "id": "box-model",
+        "title": "Understand Box Model",
+        "description": "Use box-sizing: border-box for predictable element sizing.",
+        "category": "CSS"
+    },
+    {
+        "id": "css-organization",
+        "title": "Organize CSS Rules",
+        "description": "Follow consistent order (positioning > box model > typography > visual).",
+        "category": "CSS"
+    },
+    {
+        "id": "naming-convention",
+        "title": "Use Naming Convention",
+        "description": "Adopt BEM or similar naming methodology for maintainable styles.",
+        "category": "CSS"
+    },
+    {
+        "id": "avoid-inline",
+        "title": "Avoid Inline Styles",
+        "description": "Keep styles in external CSS files for better maintainability.",
+        "category": "CSS"
+    },
+    {
+        "id": "strict-mode",
+        "title": "Use Strict Mode",
+        "description": "Enable 'use strict' to catch common coding errors.",
+        "category": "JavaScript"
+    },
+    {
+        "id": "avoid-globals",
+        "title": "Avoid Global Variables",
+        "description": "Use module patterns or IIFEs to prevent namespace pollution.",
+        "category": "JavaScript"
+    },
+    {
+        "id": "event-cleanup",
+        "title": "Clean Up Event Listeners",
+        "description": "Remove event listeners when elements are destroyed.",
+        "category": "JavaScript"
+    },
+    {
+        "id": "error-handling",
+        "title": "Implement Error Handling",
+        "description": "Use try/catch blocks for critical operations with proper fallbacks.",
+        "category": "JavaScript"
+    },
+    {
+        "id": "dependency-management",
+        "title": "Manage Dependencies",
+        "description": "Use modern module systems (ES modules) for code organization.",
+        "category": "JavaScript"
+    }
+]

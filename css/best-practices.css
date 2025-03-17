@@ -1,0 +1,78 @@
+/* 自定义渐变背景 */
+body {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+}
+
+/* 卡片样式 */
+.practice-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.practice-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+#practices-container {
+  margin-top: 1rem;
+}
+/* 移动端响应式 */
+@media (max-width: 768px) {
+  .stats-section {
+    margin: 0 -15px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .progress-bar-container {
+    padding: 0 15px;
+  }
+
+  #practices-container {
+    margin-top: 0;
+  }
+}
+/* 统一卡片高度 */
+.category-card .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.category-card .card-body {
+  flex: 1;
+  overflow-y: auto;
+}
+.progress-title {
+  color: #2c3e50;
+  font-weight: 600;
+  text-align: center;
+}
+.progress-bar-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* 进度条动画 */
+.progress-bar {
+  transition: width 0.5s ease-in-out;
+}
+
+/* 调整进度文本显示 */
+.progress-text {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.stats-section {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem !important;
+}
