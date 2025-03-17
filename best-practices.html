@@ -1,44 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Web Development Best Practices</title>
-
-    <!-- Bootstrap CSS -->
+    <title>Best Practice Check Tool</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
     <link href="./css/best-practices.css" rel="stylesheet">
 </head>
 
 <body>
-
     <main class="container py-5">
         <h1 class="text-center mb-4">Web Development Best Practices</h1>
 
-        <div class="stats-section mb-5">
+        <!-- progress bar -->
+        <div class="stats-section mb-4">
             <h3 class="progress-title mb-3">Current Progress</h3>
-            <div class="progress-bar-container">
-                <div class="progress">
+            <div class="progress-bar-container position-relative">
+                <div class="progress" style="height: 25px;">
                     <div class="progress-bar" role="progressbar"></div>
                 </div>
-                <div class="progress-text mt-2">0/15 Best Practices Implemented</div>
+                <div class="progress-text mt-2 text-center"></div>
             </div>
         </div>
 
+        <!-- practice card -->
+        <div class="row g-4" id="practices-container"></div>
 
-        <div class="row g-4" id="practices-container">
-
-        </div>
-
+        <!-- reward display -->
         <div class="animal-reward mt-4"></div>
     </main>
 
-    <!-- Scripts -->
+    <!-- modal -->
+    <div class="reward-modal">
+        <div class="modal-mask"></div>
+        <div class="modal-content bg-white rounded-3 p-4">
+            <div class="animal-media mb-3"></div>
+            <button class="confirm-btn btn btn-success w-100 py-2">
+                🎉 Grab it！
+            </button>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script src="/js/best-practices.js" type="module"></script>
+    <script src="./js/best-practices.js"></script>
 </body>
 
 </html>

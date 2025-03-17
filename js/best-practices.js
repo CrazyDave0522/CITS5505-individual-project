@@ -1,19 +1,18 @@
-// js/best-practices.js
-
-// Configuration Constants
 const CONFIG = {
-  PRACTICES_URL: "../data/best-practices.json",
-  ANIMAL_API: "https://random.dog/woof.json",
-  FALLBACK_IMAGE: "../images/fallback.svg",
-  STORAGE_KEY: "bestPracticeSelections",
+  PRACTICES_URL: "./data/best-practices.json",
+  ANIMAL_API: "https://api.thedogapi.com/v1/images/search",
+  FALLBACK_IMAGE: "./images/fallback.png",
+  STORAGE_KEY: "practiceSelections",
   SUCCESS_THRESHOLD: 12,
   CATEGORIES: ["HTML", "CSS", "JavaScript"],
 };
 
-class BestPracticesApp {
+class BestPracticeApp {
   constructor() {
     this.practices = [];
     this.selections = new Set();
+    this.cachedAnimal = null;
+    this.modalVisible = false;
     this.init();
   }
 
@@ -21,35 +20,34 @@ class BestPracticesApp {
     await this.loadData();
     this.loadSelections();
     this.render();
-    this.setupEventListeners();
-    this.setupMobileMenu();
+    this.bindEvents();
+    this.initMobileMenu();
   }
 
-  // Data Loading Methods
+  // data loading
   async loadData() {
     try {
       const response = await fetch(CONFIG.PRACTICES_URL);
-      if (!response.ok) throw new Error("Network response was not ok");
+      if (!response.ok) throw new Error(`HTTP error ${response.status}`);
       this.practices = await response.json();
       this.validateData();
     } catch (error) {
-      console.error("Data loading failed:", error);
-      this.showErrorAlert();
+      console.error("data loading failed:", error);
+      this.showError();
     }
   }
 
   validateData() {
+    const requiredFields = ["id", "title", "description", "category"];
     const isValid = this.practices.every(
-      (practice) =>
-        practice.id &&
-        practice.title &&
-        practice.description &&
-        CONFIG.CATEGORIES.includes(practice.category)
+      (p) =>
+        requiredFields.every((f) => p[f]) &&
+        CONFIG.CATEGORIES.includes(p.category)
     );
-    if (!isValid) throw new Error("Invalid data structure");
+    if (!isValid) throw new Error("data validation failed");
   }
 
-  // State Management
+  // state management
   loadSelections() {
     const saved = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY)) || [];
     this.selections = new Set(saved);
@@ -62,23 +60,23 @@ class BestPracticesApp {
     );
   }
 
-  // Rendering Methods
+  // render UI
   render() {
     const container = document.getElementById("practices-container");
-    container.innerHTML = this.generateCategoryCards();
+    container.innerHTML = this.generateCards();
     this.updateProgress();
   }
 
-  generateCategoryCards() {
+  generateCards() {
     return CONFIG.CATEGORIES.map(
       (category) => `
-          <div class="col-md-4 category-card">
-              <div class="card mb-4">
-                  <div class="card-header category-header">
-                      <h2>${category}</h2>
+          <div class="col-lg-4 mb-4">
+              <div class="card h-100">
+                  <div class="card-header bg-primary text-white">
+                      <h3 class="mb-0">${category}</h3>
                   </div>
                   <div class="card-body">
-                      ${this.generatePracticeItems(category)}
+                      ${this.generateItems(category)}
                   </div>
               </div>
           </div>
@@ -86,21 +84,21 @@ class BestPracticesApp {
     ).join("");
   }
 
-  generatePracticeItems(category) {
+  generateItems(category) {
     return this.practices
       .filter((p) => p.category === category)
       .map(
-        (practice) => `
-              <div class="practice-item mb-3" data-id="${practice.id}">
-                  <h3 class="h5">${practice.title}</h3>
-                  <p class="text-muted">${practice.description}</p>
-                  <div class="form-check">
+        (p) => `
+              <div class="practice-item mb-3" data-id="${p.id}">
+                  <h5 class="fw-bold">${p.title}</h5>
+                  <p class="text-muted">${p.description}</p>
+                  <div class="form-check form-switch">
                       <input class="form-check-input" type="checkbox" 
-                          id="${practice.id}" ${
-          this.selections.has(practice.id) ? "checked" : ""
+                             id="${p.id}" ${
+          this.selections.has(p.id) ? "checked" : ""
         }>
-                      <label class="form-check-label" for="${practice.id}">
-                          Implemented
+                      <label class="form-check-label" for="${p.id}">
+                          Completed
                       </label>
                   </div>
               </div>
@@ -109,149 +107,154 @@ class BestPracticesApp {
       .join("");
   }
 
-  // Progress Tracking
+  // progress update
   updateProgress() {
     const total = this.selections.size;
+    const progress = document.querySelector(".progress-bar");
 
-    // update progress bar width
-    const progressBar = document.querySelector(".progress-bar");
-    if (progressBar) {
-      const percentage = ((total / 15) * 100).toFixed(1);
-      progressBar.style.width = `${percentage}%`;
-    }
+    // update progress bar
+    const percent = ((total / 15) * 100).toFixed(1);
+    progress.style.width = `${percent}%`;
+    document.querySelector(
+      ".progress-text"
+    ).textContent = `${total}/15 best practices implemented`;
 
-    // update progress text
-    const progressText = document.querySelector(".progress-text");
-    if (progressText) {
-      progressText.textContent = `${total}/15 best practices implemented`;
-    }
-
-    // handle success state
+    // handle gift icon
+    const gift = document.querySelector(".gift-indicator");
     if (total >= CONFIG.SUCCESS_THRESHOLD) {
-      this.showSuccessMessage(total);
-      this.fetchAnimalImage();
+      if (!gift) this.createGift();
+    } else {
+      if (gift) gift.remove();
+      if (this.modalVisible) this.hideModal();
     }
   }
 
-  // Event Handling
-  setupEventListeners() {
+  createGift() {
+    const container = document.querySelector(".progress-bar-container");
+    const gift = document.createElement("div");
+    gift.className = "gift-indicator";
+    gift.innerHTML = "🎁";
+    gift.addEventListener("click", () => this.showReward());
+    container.appendChild(gift);
+  }
+
+  // event handling
+  bindEvents() {
     document
       .getElementById("practices-container")
       .addEventListener("change", (e) => {
         if (e.target.matches(".form-check-input")) {
-          this.handleCheckboxChange(e.target);
+          this.handleCheckbox(e.target);
         }
       });
+
+    document
+      .querySelector(".modal-mask")
+      .addEventListener("click", () => this.hideModal());
+    document.querySelector(".confirm-btn").addEventListener("click", () => {
+      this.resetSelections();
+      this.hideModal();
+    });
   }
 
-  handleCheckboxChange(checkbox) {
-    const practiceId = checkbox.id;
-
-    if (checkbox.checked) {
-      this.selections.add(practiceId);
-    } else {
-      this.selections.delete(practiceId);
-    }
-
+  handleCheckbox(checkbox) {
+    const id = checkbox.id;
+    checkbox.checked ? this.selections.add(id) : this.selections.delete(id);
     this.saveSelections();
     this.updateProgress();
   }
 
-  // Mobile Menu Implementation
-  setupMobileMenu() {
-    const mediaQuery = window.matchMedia("(max-width: 768px)");
+  // modal control
+  async showReward() {
+    if (this.modalVisible) return;
+    this.modalVisible = true;
 
-    const handleMobileChange = (mq) => {
-      const headers = document.querySelectorAll(".category-header");
+    try {
+      const media = await this.fetchAnimal();
+      this.displayMedia(media);
+    } catch (error) {
+      console.error("failed to get reward:", error);
+      this.displayMedia(CONFIG.FALLBACK_IMAGE);
+    }
 
-      if (mq.matches) {
-        headers.forEach((header) => {
-          header.addEventListener("click", this.toggleMobileCategory);
-          header.style.cursor = "pointer";
-        });
-      } else {
-        headers.forEach((header) => {
-          header.removeEventListener("click", this.toggleMobileCategory);
-          header.style.cursor = "default";
-        });
-      }
-    };
-
-    mediaQuery.addListener(handleMobileChange);
-    handleMobileChange(mediaQuery);
+    document.querySelector(".reward-modal").style.display = "block";
   }
 
-  toggleMobileCategory = (e) => {
-    const header = e.target.closest(".category-header");
-    const cardBody = header.nextElementSibling;
+  hideModal() {
+    document.querySelector(".reward-modal").style.display = "none";
+    this.modalVisible = false;
+  }
 
-    cardBody.classList.toggle("d-none");
-    header.classList.toggle("active-category");
-  };
+  // data reset
+  resetSelections() {
+    this.selections.clear();
+    localStorage.removeItem(CONFIG.STORAGE_KEY);
+    document
+      .querySelectorAll(".form-check-input")
+      .forEach((cb) => (cb.checked = false));
+    this.updateProgress();
+  }
 
-  // API Handling
-  async fetchAnimalImage() {
+  // animal image fetching
+  async fetchAnimal() {
+    if (this.cachedAnimal) return this.cachedAnimal;
+
     try {
       const response = await fetch(CONFIG.ANIMAL_API);
-      if (!response.ok) throw new Error("API error");
-
+      if (!response.ok) throw new Error("API request failed");
       const data = await response.json();
-      const imageUrl = data.url.includes(".mp4")
-        ? CONFIG.FALLBACK_IMAGE
-        : data.url;
-      this.displayAnimal(imageUrl);
+      this.cachedAnimal = data[0].url;
+      return this.cachedAnimal;
     } catch (error) {
-      console.error("Animal fetch failed:", error);
-      this.displayAnimal(CONFIG.FALLBACK_IMAGE);
+      return CONFIG.FALLBACK_IMAGE;
     }
   }
 
-  displayAnimal(imageUrl) {
-    const container = document.querySelector(".animal-reward");
-    container.innerHTML = `
-          <div class="text-center mt-4">
-              <h3>Congratulations! 🎉</h3>
-              <div class="animal-image-container">
-                  ${
-                    imageUrl.endsWith(".webm")
-                      ? `
-                      <video controls class="img-fluid">
-                          <source src="${imageUrl}" type="video/webm">
-                      </video>
-                  `
-                      : `
-                      <img src="${imageUrl}" class="img-fluid rounded" alt="Cute animal reward">
-                  `
-                  }
-              </div>
-          </div>
+  displayMedia(url) {
+    const container = document.querySelector(".animal-media");
+    container.innerHTML = url.endsWith(".mp4")
+      ? `
+          <video src="${url}" autoplay muted loop class="img-fluid rounded-3"></video>
+      `
+      : `
+          <img src="${url}" class="img-fluid rounded-3" alt="Reward Image">
       `;
   }
 
-  // Error Handling
-  showErrorAlert() {
+  // mobile menu
+  initMobileMenu() {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const handler = () => {
+      const headers = document.querySelectorAll(".category-header");
+      headers.forEach((h) => {
+        h.style.cursor = mq.matches ? "pointer" : "default";
+        h[mq.matches ? "addEventListener" : "removeEventListener"](
+          "click",
+          this.toggleSection
+        );
+      });
+    };
+    mq.addListener(handler);
+    handler();
+  }
+
+  toggleSection = (e) => {
+    const header = e.target.closest(".card-header");
+    const body = header.nextElementSibling;
+    body.classList.toggle("d-none");
+  };
+
+  // error handling
+  showError() {
     const container = document.getElementById("practices-container");
     container.innerHTML = `
-          <div class="alert alert-danger" role="alert">
-              Failed to load content. Please refresh the page or try again later.
+          <div class="alert alert-danger">
+              <i class="bi bi-exclamation-triangle"></i>
+              unable to load content, please check your network connection and refresh the page
           </div>
       `;
-  }
-
-  // modify success message
-  showSuccessMessage(total) {
-    const progressText = document.querySelector(".progress-text");
-    if (progressText) {
-      progressText.innerHTML = `
-          <span class="text-success fw-bold">
-              Success！You have implemented ${total}/15 best practices！
-          </span>
-      `;
-    }
   }
 }
 
-// Initialize Application
-document.addEventListener("DOMContentLoaded", () => {
-  new BestPracticesApp();
-});
+// initialize the app
+document.addEventListener("DOMContentLoaded", () => new BestPracticeApp());
