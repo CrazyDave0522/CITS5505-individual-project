@@ -3,9 +3,9 @@ name: Update README Directory
 on:
   push:
     branches:
-      - main  #  active only when push to main
+      - main  # Active only when pushing to main
   schedule:
-    - cron: "0 0 * * 1"  # automatically run on Mondays
+    - cron: "0 0 * * 1"  # Automatically runs on Mondays
 
 jobs:
   update-readme:
@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3  # pull the code
+        uses: actions/checkout@v3  # Pull the code
 
       - name: Install tree
         run: sudo apt-get install tree  
@@ -21,10 +21,9 @@ jobs:
       - name: Generate Directory Structure
         run: |
           tree -I "node_modules|.git|.github" > structure.txt
-          sed -i '/<!-- START_DIR_STRUCTURE -->/,/<!-- END_DIR_STRUCTURE -->/c\
-          <!-- START_DIR_STRUCTURE -->\n\
-          '"$(cat structure.txt)"'\n\
-          <!-- END_DIR_STRUCTURE -->' README.md
+          export LC_ALL=C.UTF-8  # Ensure consistent encoding
+          printf '<!-- START_DIR_STRUCTURE -->\n%s\n<!-- END_DIR_STRUCTURE -->\n' "$(cat structure.txt)" > tmp.txt
+          sed -i '/<!-- START_DIR_STRUCTURE -->/,/<!-- END_DIR_STRUCTURE -->/c\'"$(cat tmp.txt)" README.md
 
       - name: Commit and Push Changes
         run: |
