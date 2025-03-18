@@ -13,42 +13,40 @@
     <main class="container py-5">
         <h1 class="text-center mb-4 text-white">Web Development Best Practices</h1>
 
-        <!-- 进度条 -->
-        <div class="stats-section mb-4">
+        <div class="sticky-progress">
             <h3 class="progress-title mb-3 text-white">Current Progress</h3>
-            <div class="progress-bar-container position-relative">
-                <div class="progress" style="height: 25px;">
+            <div class="progress-bar-container">
+                <div class="progress">
                     <div class="progress-bar bg-success" role="progressbar"></div>
                 </div>
-                <div class="progress-text mt-2 text-center text-white"></div>
+                <div class="progress-text mt-2 text-center text-white">0/15 best practices implemented</div>
+                <!-- 礼物标识将在这里插入 -->
             </div>
         </div>
+        
+          
+        
+        
 
-        <!-- 卡片容器 -->
         <div class="row g-4" id="practices-container"></div>
 
-        <!-- 奖励展示 -->
         <div class="animal-reward mt-4"></div>
     </main>
 
-    <!-- 弹窗 -->
     <div class="reward-modal">
         <div class="modal-mask"></div>
         <div class="modal-content bg-white rounded-3 p-4">
             <div class="animal-media mb-3"></div>
-            <button class="confirm-btn btn btn-success w-100 py-2">
-                🎉 Grab it！
-            </button>
+            <button class="confirm-btn btn btn-success w-100 py-2">🎉 Grab it！</button>
         </div>
     </div>
 
-    <!-- 页脚 -->
     <footer class="site-footer mt-auto py-3">
         <div class="container">
             <div class="text-center text-muted">
                 <span>CITS5505 Individual Project</span>
                 <span class="mx-2">•</span>
-                <span>Created by <a href="./cv.html">Zixiao Ma</a>(24116864)</span>
+                <span>Created by <a href="./cv.html">Zixiao Ma</a> (24116864)</span>
                 <span class="mx-2">•</span>
                 <span>&copy; 2025 All rights reserved</span>
             </div>
@@ -56,6 +54,12 @@
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script src="./js/best-practices.js"></script>
+    <script src="./js/best-practices/config.js"></script>
+    <script src="./js/best-practices/dataManager.js"></script>
+    <script src="./js/best-practices/uiManager.js"></script>
+    <script src="./js/best-practices/eventHandler.js"></script>
+    <script src="./js/best-practices/rewardManager.js"></script>
+    <script src="./js/best-practices/main.js"></script>
 </body>
+
 </html>
