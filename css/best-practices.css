@@ -34,14 +34,15 @@ body {
 }
 
 .progress-bar-container {
-  width: 100%;  /* Ensures the progress bar takes up full width */
-  max-width: 800px;  /* Limits the progress bar container width */
-  margin: 0 auto;  /* Centers the progress bar */
+  width: 100%; /* Ensures the progress bar takes up full width */
+  max-width: 80%; /* Limits the progress bar container width */
+  margin: 0 auto; /* Centers the progress bar */
   text-align: center;
+
 }
 
 .progress {
-  height: 25px; 
+  height: 25px;
   border-radius: 12px; /* Rounded corners for the progress bar */
   background-color: #e0e0e0; /* Light gray background for the progress bar */
 }
@@ -76,7 +77,8 @@ body {
 }
 
 @keyframes subtle-bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(-50%);
   }
   50% {
@@ -92,6 +94,11 @@ body {
   background-color: #34495e;
   color: white;
   font-weight: bold;
+}
+
+.category-card {
+  contain: content; /* 限制浏览器重绘范围 */
+  will-change: transform; /* 提示浏览器提前优化 */
 }
 
 .html-header,
@@ -112,7 +119,9 @@ body {
 .js-header {
   background: linear-gradient(45deg, #f1e05a, #f2e04a);
 }
-
+.practice-item {
+  contain: layout style; /* 隔离样式影响 */
+}
 /* Modal and Footer Styles */
 .reward-modal {
   display: none;
@@ -158,6 +167,12 @@ body {
   text-align: center;
 }
 
+@media (max-width: 768px) {
+  .progress-bar-container {
+    width: 80%; /* 新增移动端宽度限制 */
+    max-width: none; /* 覆盖原有max-width */
+  }
+}
 /* 添加响应式调整 */
 @media (max-width: 768px) {
   .gift-indicator {

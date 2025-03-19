@@ -49,12 +49,16 @@ class UIManager {
             <p class="text-muted">${p.description}</p>
             <div class="form-check form-switch">
               <input class="form-check-input" 
-                     type="checkbox" 
-                     id="${p.id}" 
-                     ${
-                       selections.has(p.id) ? "checked" : ""
-                     }> <!-- 仅修改这一行 -->
-              <label class="form-check-label" for="${p.id}">Implemented</label>
+        type="checkbox" 
+        id="${p.id}-input"  
+        ${selections.has(p.id) ? "checked" : ""}
+        aria-labelledby="${p.id}-label">  
+
+<label class="form-check-label" 
+       id="${p.id}-label"  
+       for="${p.id}-input">  
+  Implemented
+</label>
             </div>
           </div>
         `
@@ -69,6 +73,10 @@ class UIManager {
     const gift = document.createElement("div");
     gift.className = "gift-indicator";
     gift.innerHTML = "🎁";
+
+    // 先加载第一张图片
+    RewardManager.preloadMedia();
+
     gift.addEventListener("click", () => RewardManager.showReward());
     container.appendChild(gift);
   }
