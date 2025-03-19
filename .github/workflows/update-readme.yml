@@ -7,6 +7,9 @@ on:
   schedule:
     - cron: "0 0 * * 1"  # Automatically runs on Mondays
 
+permissions:
+  contents: write  # 🚀 This grants write access to push changes
+
 jobs:
   update-readme:
     runs-on: ubuntu-latest
