@@ -9,7 +9,7 @@ class BestPracticeApp {
     try {
       this.practices = await DataManager.loadPractices();
       document.getElementById("practices-container").innerHTML =
-        UIManager.generateCards(this.practices);
+        UIManager.generateCards(this.practices, this.selections);
       this.loadSelections(); // 先加载本地存储的选择数据
       // 根据 selections 更新复选框状态
       this.selections.forEach((id) => {

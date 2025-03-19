@@ -157,3 +157,17 @@ body {
   padding: 1rem 0;
   text-align: center;
 }
+
+/* 添加响应式调整 */
+@media (max-width: 768px) {
+  .gift-indicator {
+    right: -30px;
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 576px) {
+  .gift-indicator {
+    right: -25px;
+  }
+}

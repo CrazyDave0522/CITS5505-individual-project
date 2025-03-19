@@ -16,7 +16,7 @@ class UIManager {
     }
   }
 
-  static generateCards(practices) {
+  static generateCards(practices, selections) { // 新增 selections 参数
     return CONFIG.CATEGORIES.map(
       (category) => `
         <div class="col-lg-4 mb-4">
@@ -25,7 +25,7 @@ class UIManager {
               <h3 class="mb-0">${category}</h3>
             </div>
             <div class="card-body">
-              ${UIManager.generateItems(practices, category)}
+              ${this.generateItems(practices, category, selections)} <!-- 传递 selections -->
             </div>
           </div>
         </div>
@@ -33,20 +33,23 @@ class UIManager {
     ).join("");
   }
 
-  static generateItems(practices, category) {
+  static generateItems(practices, category, selections) { // 新增 selections 参数
     return practices
       .filter((p) => p.category === category)
       .map(
         (p) => `
-        <div class="practice-item mb-5" data-id="${p.id}">
-          <h5 class="fw-bold">${p.title}</h5>
-          <p class="text-muted">${p.description}</p>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="${p.id}" />
-            <label class="form-check-label" for="${p.id}">Implemented</label>
+          <div class="practice-item mb-5" data-id="${p.id}">
+            <h5 class="fw-bold">${p.title}</h5>
+            <p class="text-muted">${p.description}</p>
+            <div class="form-check form-switch">
+              <input class="form-check-input" 
+                     type="checkbox" 
+                     id="${p.id}" 
+                     ${selections.has(p.id) ? 'checked' : ''}> <!-- 仅修改这一行 -->
+              <label class="form-check-label" for="${p.id}">Implemented</label>
+            </div>
           </div>
-        </div>
-      `
+        `
       )
       .join("");
   }
