@@ -33,14 +33,19 @@ class BestPracticeApp {
   }
 
   handleCheckbox(checkbox) {
-    checkbox.checked
-      ? this.selections.add(checkbox.id)
-      : this.selections.delete(checkbox.id);
-    localStorage.setItem(
-      CONFIG.STORAGE_KEY,
-      JSON.stringify([...this.selections])
-    ); // 保存到本地存储
-    UIManager.updateProgress(this.selections.size);
+    clearTimeout(this.debounceTimer);
+    
+    this.debounceTimer = setTimeout(() => {
+      checkbox.checked
+        ? this.selections.add(checkbox.id)
+        : this.selections.delete(checkbox.id);
+      
+      localStorage.setItem(
+        CONFIG.STORAGE_KEY,
+        JSON.stringify([...this.selections])
+      );
+      UIManager.updateProgress(this.selections.size);
+    }, 200); // 200ms延迟
   }
 
   resetSelections() {
@@ -56,4 +61,3 @@ class BestPracticeApp {
 document.addEventListener("DOMContentLoaded", () => {
   window.app = new BestPracticeApp(); // 将实例存到全局
 });
-
