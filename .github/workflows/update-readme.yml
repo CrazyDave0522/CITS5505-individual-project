@@ -3,12 +3,12 @@ name: Update README Directory
 on:
   push:
     branches:
-      - main  # Active only when pushing to main
+      - main
   schedule:
-    - cron: "0 0 * * 1"  # Automatically runs on Mondays
+    - cron: "0 0 * * 1"
 
 permissions:
-  contents: write  # Grant write access for GitHub Actions
+  contents: write
 
 jobs:
   update-readme:
@@ -26,9 +26,11 @@ jobs:
       - name: Generate Directory Structure
         run: |
           tree -I "node_modules|.git|.github" > structure.txt
-          export LC_ALL=C.UTF-8  # Ensure consistent encoding
+          export LC_ALL=C.UTF-8
           sed -i '/<!-- START_DIR_STRUCTURE -->/,/<!-- END_DIR_STRUCTURE -->/d' README.md
-          sed -i '/<!-- START_DIR_STRUCTURE -->/r structure.txt' README.md
+          sed -i '/<!-- START_DIR_STRUCTURE -->/a \
+          '"$(cat structure.txt)"'
+          ' README.md
 
       - name: Commit and Push Changes
         run: |
