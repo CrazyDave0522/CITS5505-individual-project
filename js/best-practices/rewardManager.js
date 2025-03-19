@@ -1,5 +1,5 @@
 class RewardManager {
-  static cachedMedia = null; // 新增缓存变量
+  static cachedMedia = null;
   static preloadTimeout = null;
 
   static async preloadMedia() {
@@ -16,8 +16,7 @@ class RewardManager {
     const media = this.cachedMedia || CONFIG.FALLBACK_IMAGE;
     this.displayMedia(media);
     document.querySelector(".reward-modal").style.display = "block";
-    
-    // 立即开始预加载下一张
+
     this.preloadMedia();
   }
 
@@ -49,7 +48,6 @@ class RewardManager {
   }
 }
 
-// 绑定关闭弹窗的事件，并重置选择状态
 document.addEventListener("DOMContentLoaded", () => {
   document
     .querySelector(".modal-mask")

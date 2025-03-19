@@ -7,17 +7,16 @@ class UIManager {
       ".progress-text"
     ).textContent = `${total}/15 best practices implemented`;
 
-    // 处理礼物图标
+    // handling gift icon
     const gift = document.querySelector(".gift-indicator");
     if (total >= CONFIG.SUCCESS_THRESHOLD) {
-      if (!gift) UIManager.createGift(); // 只有当礼物图标不存在时才创建
+      if (!gift) UIManager.createGift(); // only create gift when it's not there
     } else {
       if (gift) gift.remove();
     }
   }
 
   static generateCards(practices, selections) {
-    // 新增 selections 参数
     return CONFIG.CATEGORIES.map(
       (category) => `
         <div class="col-lg-4 mb-4">
@@ -30,7 +29,7 @@ class UIManager {
                 practices,
                 category,
                 selections
-              )} <!-- 传递 selections -->
+              )} <!-- pass selections -->
             </div>
           </div>
         </div>
@@ -39,7 +38,6 @@ class UIManager {
   }
 
   static generateItems(practices, category, selections) {
-    // 新增 selections 参数
     return practices
       .filter((p) => p.category === category)
       .map(
@@ -52,7 +50,7 @@ class UIManager {
         type="checkbox" 
         id="${p.id}-input"  
         ${selections.has(p.id) ? "checked" : ""}
-        aria-labelledby="${p.id}-label">  
+        aria-labelledby="${p.id}-label"> 
 
 <label class="form-check-label" 
        id="${p.id}-label"  
@@ -74,7 +72,6 @@ class UIManager {
     gift.className = "gift-indicator";
     gift.innerHTML = "🎁";
 
-    // 先加载第一张图片
     RewardManager.preloadMedia();
 
     gift.addEventListener("click", () => RewardManager.showReward());

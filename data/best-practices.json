@@ -8,25 +8,25 @@
     {
         "id": "alt-text",
         "title": "Provide Alt Text for Images",
-        "description": "All <img> elements should have meaningful alt attributes for accessibility.",
+        "description": "All &lt;img&gt; elements should have meaningful alt attributes for accessibility.",
         "category": "HTML"
     },
     {
         "id": "form-labels",
         "title": "Label Form Elements",
-        "description": "Use <label> tags or aria-label attributes for all form inputs.",
+        "description": "Use &lt;label&gt; tags or aria-label attributes for all form inputs.",
         "category": "HTML"
     },
     {
         "id": "valid-doctype",
         "title": "Use HTML5 Doctype",
-        "description": "Always declare <!DOCTYPE html> at document start for standards mode.",
+        "description": "Always declare &lt;!DOCTYPE html&gt; at document start for standards mode.",
         "category": "HTML"
     },
     {
         "id": "viewport-meta",
         "title": "Include Viewport Meta Tag",
-        "description": "Use <meta name='viewport'> to ensure proper mobile rendering.",
+        "description": "Use &lt;meta name='viewport'&gt; to ensure proper mobile rendering.",
         "category": "HTML"
     },
     {

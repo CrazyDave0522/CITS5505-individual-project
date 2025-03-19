@@ -10,15 +10,15 @@ class BestPracticeApp {
       this.practices = await DataManager.loadPractices();
       document.getElementById("practices-container").innerHTML =
         UIManager.generateCards(this.practices, this.selections);
-      this.loadSelections(); // 先加载本地存储的选择数据
-      // 根据 selections 更新复选框状态
+      this.loadSelections();
+
       this.selections.forEach((id) => {
         const checkbox = document.getElementById(id);
         if (checkbox) {
           checkbox.checked = true;
         }
       });
-      UIManager.updateProgress(this.selections.size); // 页面加载时立即更新进度
+      UIManager.updateProgress(this.selections.size);
       EventHandler.bindEvents(this);
       UIManager.initMobileMenu(); // Initialize the mobile menu
     } catch (error) {
@@ -34,12 +34,12 @@ class BestPracticeApp {
 
   handleCheckbox(checkbox) {
     clearTimeout(this.debounceTimer);
-    
+
     this.debounceTimer = setTimeout(() => {
       checkbox.checked
         ? this.selections.add(checkbox.id)
         : this.selections.delete(checkbox.id);
-      
+
       localStorage.setItem(
         CONFIG.STORAGE_KEY,
         JSON.stringify([...this.selections])
@@ -59,5 +59,5 @@ class BestPracticeApp {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  window.app = new BestPracticeApp(); // 将实例存到全局
+  window.app = new BestPracticeApp(); // Expose the app instance globally
 });

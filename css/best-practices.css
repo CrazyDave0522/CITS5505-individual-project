@@ -38,7 +38,6 @@ body {
   max-width: 80%; /* Limits the progress bar container width */
   margin: 0 auto; /* Centers the progress bar */
   text-align: center;
-
 }
 
 .progress {
@@ -97,8 +96,8 @@ body {
 }
 
 .category-card {
-  contain: content; /* 限制浏览器重绘范围 */
-  will-change: transform; /* 提示浏览器提前优化 */
+  contain: content;
+  will-change: transform;
 }
 
 .html-header,
@@ -120,9 +119,9 @@ body {
   background: linear-gradient(45deg, #f1e05a, #f2e04a);
 }
 .practice-item {
-  contain: layout style; /* 隔离样式影响 */
+  contain: layout style;
 }
-/* Modal and Footer Styles */
+
 .reward-modal {
   display: none;
   position: fixed;
@@ -155,6 +154,13 @@ body {
   color: #333;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.animal-media {
+  width: 100%;
+  text-align: center;
 }
 
 .site-footer {
@@ -168,21 +174,18 @@ body {
 }
 
 @media (max-width: 768px) {
-  .progress-bar-container {
-    width: 80%; /* 新增移动端宽度限制 */
-    max-width: none; /* 覆盖原有max-width */
-  }
-}
-/* 添加响应式调整 */
-@media (max-width: 768px) {
   .gift-indicator {
     right: -30px;
     font-size: 28px;
+  }
+  .progress-bar-container {
+    width: 90%;
+    max-width: none;
   }
 }
 
 @media (max-width: 576px) {
   .gift-indicator {
-    right: -25px;
+    right: 8px;
   }
 }
